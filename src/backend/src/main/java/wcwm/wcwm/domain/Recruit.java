@@ -32,6 +32,8 @@ public class Recruit extends BaseTimeEntity {
 
     private String career;
 
+    private Integer min_career;
+
     private String period;
 
     private String location;
