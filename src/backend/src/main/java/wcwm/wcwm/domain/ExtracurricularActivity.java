@@ -38,7 +38,7 @@ public class ExtracurricularActivity extends BaseTimeEntity {
 
     private String total_prize;
 
-    private String homepage;
+    private String url;
 
     private String poster;
 }
