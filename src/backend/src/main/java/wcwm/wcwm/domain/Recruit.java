@@ -38,5 +38,5 @@ public class Recruit extends BaseTimeEntity {
 
     private String location;
 
-    private String page;
+    private String url;
 }
