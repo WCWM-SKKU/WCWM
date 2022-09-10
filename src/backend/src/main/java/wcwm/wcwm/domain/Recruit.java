@@ -1,5 +1,8 @@
 package wcwm.wcwm.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,4 +42,12 @@ public class Recruit extends BaseTimeEntity {
     private String location;
 
     private String url;
+
+    /*
+     * duty: String to List
+     * ex) "프론트엔드, 웹 풀스텍" -> [”프론트엔드”, “웹 풀스택”]
+     */
+    public List<String> dutyToList() {
+        return Arrays.asList(this.duty.split(","));
+    }
 }
