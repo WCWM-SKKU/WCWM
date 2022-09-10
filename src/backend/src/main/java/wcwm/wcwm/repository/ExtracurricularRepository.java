@@ -15,18 +15,23 @@ public class ExtracurricularRepository {
 
     private final EntityManager em;
 
-    List<ExtracurricularActivity> findAll(int firstResult, int maxResults) {
+    /**
+     * Todo
+     * Optional 처리
+     */
+
+    public List<ExtracurricularActivity> findAll(int firstResult, int maxResults) {
         return em.createQuery("select e from ExtracurricularActivity e", ExtracurricularActivity.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
                 .getResultList();
     }
 
-    ExtracurricularActivity findById(Long id) {
+    public ExtracurricularActivity findOne(Long id) {
         return em.find(ExtracurricularActivity.class, id);
     }
 
-    List<ExtracurricularActivity> findByCategory(String category, int firstResult, int maxResults) {
+    public List<ExtracurricularActivity> findByCategory(String category, int firstResult, int maxResults) {
         return em
                 .createQuery("select e from ExtracurricularActivity e where e.category like %:category%",
                         ExtracurricularActivity.class)

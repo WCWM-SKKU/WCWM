@@ -15,6 +15,11 @@ public class RecruitRepository {
 
     private final EntityManager em;
 
+    /**
+     * Todo
+     * Optional 처리
+     */
+
     public List<Recruit> findAll(int firstResult, int maxResults) {
         return em.createQuery("select r from Recruit r", Recruit.class)
                 .setFirstResult(firstResult)
