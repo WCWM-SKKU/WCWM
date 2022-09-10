@@ -1,5 +1,8 @@
 package wcwm.wcwm.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,4 +44,17 @@ public class ExtracurricularActivity extends BaseTimeEntity {
     private String url;
 
     private String poster;
+
+    /*
+     * category, target: String to List
+     * ex) "웹/모바일/IT, 과학/공학" -> [”웹/모바일/IT”, “과학/공학"]
+     * ex) "일반인, 대학생, 청소년, 기타" -> ["일반인", "대학생", "청소년", "기타"],
+     */
+    public List<String> categoryToList() {
+        return Arrays.asList(this.category.split(","));
+    }
+
+    public List<String> targetToList() {
+        return Arrays.asList(this.target.split(","));
+    }
 }

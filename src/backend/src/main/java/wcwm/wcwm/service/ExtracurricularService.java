@@ -1,6 +1,7 @@
 package wcwm.wcwm.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wcwm.wcwm.domain.ExtracurricularActivity;
+import wcwm.wcwm.dto.ExtracurricularResponse;
 import wcwm.wcwm.repository.ExtracurricularRepository;
 
 @Slf4j
@@ -21,24 +23,38 @@ public class ExtracurricularService {
 
     /**
      * Todo
-     * 1) category: String to List and DTO 처리
-     * ex) "웹/모바일/IT, 과학/공학" -> [”웹/모바일/IT”, “과학/공학"]
-     * 
-     * 2) querystring의 categoryId와 category 매칭
+     * querystring의 categoryId와 category 매칭
      */
 
     @Transactional(readOnly = true)
-    public List<ExtracurricularActivity> findExtracurriculars(int page) {
-        return extracurricularRepository.findAll(MAX_RESULTS * page + 1, MAX_RESULTS);
+    public List<ExtracurricularResponse> findExtracurriculars(int page) {
+        List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(MAX_RESULTS * page + 1,
+                MAX_RESULTS);
+        return toResponse(foundExtracurriculars);
     }
 
     @Transactional(readOnly = true)
-    public ExtracurricularActivity findExtracurricular(Long id) {
-        return extracurricularRepository.findOne(id);
+    public ExtracurricularResponse findExtracurricular(Long id) {
+        ExtracurricularActivity find = extracurricularRepository.findOne(id);
+
+        ExtracurricularResponse result = new ExtracurricularResponse(find.getId(), find.getTitle(),
+                find.categoryToList(), find.targetToList(),
+                find.getHost(), find.getSponsor(), find.getPeriod(), find.getTotal_prize(), find.getUrl(),
+                find.getPoster());
+        return result;
     }
 
     @Transactional(readOnly = true)
-    public List<ExtracurricularActivity> findExtracurricularByCategory(String category, int page) {
-        return extracurricularRepository.findByCategory(category, MAX_RESULTS * page + 1, MAX_RESULTS);
+    public List<ExtracurricularResponse> findExtracurricularByCategory(String category, int page) {
+        List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findByCategory(category,
+                MAX_RESULTS * page + 1, MAX_RESULTS);
+        return toResponse(foundExtracurriculars);
+    }
+
+    public List<ExtracurricularResponse> toResponse(List<ExtracurricularActivity> target) {
+        return target.stream()
+                .map(e -> new ExtracurricularResponse(e.getId(), e.getTitle(), e.categoryToList(), e.targetToList(),
+                        e.getHost(), e.getSponsor(), e.getPeriod(), e.getTotal_prize(), e.getUrl(), e.getPoster()))
+                .collect(Collectors.toList());
     }
 }
