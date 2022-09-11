@@ -20,7 +20,7 @@ public class RecruitRepository {
      * Optional 처리
      */
 
-    public List<Recruit> findAll(int firstResult, int maxResults) {
+    public List<Recruit> findAll(Integer firstResult, Integer maxResults) {
         return em.createQuery("select r from Recruit r", Recruit.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
@@ -31,7 +31,7 @@ public class RecruitRepository {
         return em.find(Recruit.class, id);
     }
 
-    public List<Recruit> findByMinCareer(int minCareer, int firstResult, int maxResults) {
+    public List<Recruit> findByMinCareer(Integer minCareer, Integer firstResult, Integer maxResults) {
         return em.createQuery("select r from Recruit r where r.min_career >= :minCareer", Recruit.class)
                 .setParameter("minCareer", minCareer)
                 .setFirstResult(firstResult)
@@ -39,7 +39,7 @@ public class RecruitRepository {
                 .getResultList();
     }
 
-    public List<Recruit> findByDuty(String duty, int firstResult, int maxResults) {
+    public List<Recruit> findByDuty(String duty, Integer firstResult, Integer maxResults) {
         return em.createQuery("select r from Recruit r where r.duty like %:duty%", Recruit.class)
                 .setParameter("duty", duty)
                 .setFirstResult(firstResult)
@@ -47,7 +47,8 @@ public class RecruitRepository {
                 .getResultList();
     }
 
-    public List<Recruit> findByMinCareerAndDuty(int minCareer, String duty, int firstResult, int maxResults) {
+    public List<Recruit> findByMinCareerAndDuty(Integer minCareer, String duty, Integer firstResult,
+            Integer maxResults) {
         return em
                 .createQuery("select r from Recruit r where r.min_career >= :minCareer and r.duty like %:duty%",
                         Recruit.class)
