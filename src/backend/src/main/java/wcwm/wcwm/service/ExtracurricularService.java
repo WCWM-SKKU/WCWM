@@ -27,7 +27,7 @@ public class ExtracurricularService {
      */
 
     @Transactional(readOnly = true)
-    public List<ExtracurricularResponse> findExtracurriculars(int page) {
+    public List<ExtracurricularResponse> findExtracurriculars(Integer page) {
         List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(MAX_RESULTS * page + 1,
                 MAX_RESULTS);
         return toResponse(foundExtracurriculars);
@@ -45,7 +45,7 @@ public class ExtracurricularService {
     }
 
     @Transactional(readOnly = true)
-    public List<ExtracurricularResponse> findExtracurricularByCategory(String category, int page) {
+    public List<ExtracurricularResponse> findExtracurricularByCategory(String category, Integer page) {
         List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findByCategory(category,
                 MAX_RESULTS * page + 1, MAX_RESULTS);
         return toResponse(foundExtracurriculars);

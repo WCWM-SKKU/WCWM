@@ -19,10 +19,10 @@ public class RecruitService {
 
     private final RecruitRepository recruitRepository;
 
-    private final int MAX_RESULTS = 20;
+    private final Integer MAX_RESULTS = 20;
 
     @Transactional(readOnly = true)
-    public List<RecruitResponse> findRecruits(int page) {
+    public List<RecruitResponse> findRecruits(Integer page) {
         List<Recruit> foundRecruits = recruitRepository.findAll(MAX_RESULTS * page + 1, MAX_RESULTS);
         return toResponse(foundRecruits);
     }
@@ -37,19 +37,19 @@ public class RecruitService {
     }
 
     @Transactional(readOnly = true)
-    public List<RecruitResponse> findRecruitByMinCareer(int minCareer, int page) {
+    public List<RecruitResponse> findRecruitByMinCareer(Integer minCareer, Integer page) {
         List<Recruit> foundRecruits = recruitRepository.findByMinCareer(minCareer, MAX_RESULTS * page + 1, MAX_RESULTS);
         return toResponse(foundRecruits);
     }
 
     @Transactional(readOnly = true)
-    public List<RecruitResponse> findRecruitByDuty(String duty, int page) {
+    public List<RecruitResponse> findRecruitByDuty(String duty, Integer page) {
         List<Recruit> foundRecruits = recruitRepository.findByDuty(duty, MAX_RESULTS * page + 1, MAX_RESULTS);
         return toResponse(foundRecruits);
     }
 
     @Transactional(readOnly = true)
-    public List<RecruitResponse> findRecruitByMinCareerAndDuty(int minCareer, String duty, int page) {
+    public List<RecruitResponse> findRecruitByMinCareerAndDuty(Integer minCareer, String duty, Integer page) {
         List<Recruit> foundRecruits = recruitRepository.findByMinCareerAndDuty(minCareer, duty, MAX_RESULTS * page + 1,
                 MAX_RESULTS);
         return toResponse(foundRecruits);

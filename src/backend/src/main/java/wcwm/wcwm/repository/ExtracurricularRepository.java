@@ -20,7 +20,7 @@ public class ExtracurricularRepository {
      * Optional 처리
      */
 
-    public List<ExtracurricularActivity> findAll(int firstResult, int maxResults) {
+    public List<ExtracurricularActivity> findAll(Integer firstResult, Integer maxResults) {
         return em.createQuery("select e from ExtracurricularActivity e", ExtracurricularActivity.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
@@ -31,7 +31,7 @@ public class ExtracurricularRepository {
         return em.find(ExtracurricularActivity.class, id);
     }
 
-    public List<ExtracurricularActivity> findByCategory(String category, int firstResult, int maxResults) {
+    public List<ExtracurricularActivity> findByCategory(String category, Integer firstResult, Integer maxResults) {
         return em
                 .createQuery("select e from ExtracurricularActivity e where e.category like %:category%",
                         ExtracurricularActivity.class)
