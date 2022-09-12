@@ -35,7 +35,15 @@ public class Recruit extends BaseTimeEntity {
 
     private String career;
 
+    /**
+     * 경력 무관, 신입 -> 0, n~m년 -> n
+     */
     private Integer min_career;
+
+    /**
+     * 경력 무관, 신입 -> 100, n~m년 -> m
+     */
+    private Integer max_career;
 
     private String period;
 

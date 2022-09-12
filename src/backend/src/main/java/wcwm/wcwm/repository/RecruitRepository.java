@@ -32,7 +32,9 @@ public class RecruitRepository {
     }
 
     public List<Recruit> findByMinCareer(Integer minCareer, Integer firstResult, Integer maxResults) {
-        return em.createQuery("select r from Recruit r where r.min_career >= :minCareer", Recruit.class)
+        return em
+                .createQuery("select r from Recruit r where r.min_career <= :minCareer and r.max_career >= :minCareer",
+                        Recruit.class)
                 .setParameter("minCareer", minCareer)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
@@ -50,7 +52,8 @@ public class RecruitRepository {
     public List<Recruit> findByMinCareerAndDuty(Integer minCareer, String duty, Integer firstResult,
             Integer maxResults) {
         return em
-                .createQuery("select r from Recruit r where r.min_career >= :minCareer and r.duty like %:duty%",
+                .createQuery(
+                        "select r from Recruit r where r.min_career <= :minCareer and r.max_career >= :minCareer and r.duty like %:duty%",
                         Recruit.class)
                 .setParameter("minCareer", minCareer)
                 .setParameter("duty", duty)
