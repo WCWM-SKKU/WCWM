@@ -21,7 +21,9 @@ public class ExtracurricularRepository {
      */
 
     public List<ExtracurricularActivity> findAll(Integer firstResult, Integer maxResults) {
-        return em.createQuery("select e from ExtracurricularActivity e", ExtracurricularActivity.class)
+        return em
+                .createQuery("select e from ExtracurricularActivity e order by e.id desc",
+                        ExtracurricularActivity.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
                 .getResultList();
@@ -33,9 +35,10 @@ public class ExtracurricularRepository {
 
     public List<ExtracurricularActivity> findByCategory(String category, Integer firstResult, Integer maxResults) {
         return em
-                .createQuery("select e from ExtracurricularActivity e where e.category like %:category%",
+                .createQuery(
+                        "select e from ExtracurricularActivity e where e.category like :category order by e.id desc",
                         ExtracurricularActivity.class)
-                .setParameter("category", category)
+                .setParameter("category", "%" + category + "%")
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
                 .getResultList();
