@@ -34,7 +34,7 @@ public class ExtracurricularService {
     }
 
     @Transactional(readOnly = true)
-    public ExtracurricularResponse findExtracurricular(Long id) {
+    public ExtracurricularResponse findOne(Long id) {
         ExtracurricularActivity find = extracurricularRepository.findOne(id);
 
         ExtracurricularResponse result = new ExtracurricularResponse(find.getId(), find.getTitle(),
