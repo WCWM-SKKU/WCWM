@@ -21,11 +21,6 @@ public class ExtracurricularService {
 
     private final int MAX_RESULTS = 20;
 
-    /**
-     * Todo
-     * querystring의 categoryId와 category 매칭
-     */
-
     @Transactional(readOnly = true)
     public List<ExtracurricularResponse> findExtracurriculars(Integer page) {
         List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(MAX_RESULTS * page,
