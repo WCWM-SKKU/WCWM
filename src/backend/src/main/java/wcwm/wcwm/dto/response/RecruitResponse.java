@@ -1,4 +1,4 @@
-package wcwm.wcwm.dto;
+package wcwm.wcwm.dto.response;
 
 import java.util.List;
 

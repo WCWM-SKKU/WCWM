@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import wcwm.wcwm.dto.RecruitResponse;
+import wcwm.wcwm.dto.response.RecruitResponse;
 import wcwm.wcwm.service.RecruitService;
 
 @Slf4j
