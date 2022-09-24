@@ -8,6 +8,13 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RecruitResponse {
+
+    private Boolean isSuccess;
+
+    private Integer code;
+
+    private String message;
+
     private Long id;
 
     private String title;

@@ -1,6 +1,7 @@
 package wcwm.wcwm.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wcwm.wcwm.domain.Recruit;
 import wcwm.wcwm.dto.response.RecruitResponse;
+import wcwm.wcwm.exception.CustomException;
 import wcwm.wcwm.repository.RecruitRepository;
+
+import static wcwm.wcwm.exception.CustomExceptionStatus.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,11 +32,14 @@ public class RecruitService {
     }
 
     @Transactional(readOnly = true)
-    public RecruitResponse findOne(Long id) {
-        Recruit find = recruitRepository.findOne(id);
+    public Optional<RecruitResponse> findOne(Long id) {
+        Recruit find = Optional.ofNullable(recruitRepository.findOne(id))
+                .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
-        RecruitResponse result = new RecruitResponse(find.getId(), find.getTitle(), find.getCompany(),
-                find.dutyToList(), find.getCareer(), find.getPeriod(), find.getLocation(), find.getUrl());
+        Optional<RecruitResponse> result = Optional
+                .ofNullable(new RecruitResponse(SUCCESS.isSuccess(), SUCCESS.getCode(),
+                        SUCCESS.getMessage(), find.getId(), find.getTitle(), find.getCompany(),
+                        find.dutyToList(), find.getCareer(), find.getPeriod(), find.getLocation(), find.getUrl()));
         return result;
     }
 
@@ -57,7 +64,8 @@ public class RecruitService {
 
     public List<RecruitResponse> toResponse(List<Recruit> target) {
         return target.stream()
-                .map(r -> new RecruitResponse(r.getId(), r.getTitle(), r.getCompany(), r.dutyToList(),
+                .map(r -> new RecruitResponse(SUCCESS.isSuccess(), SUCCESS.getCode(),
+                        SUCCESS.getMessage(), r.getId(), r.getTitle(), r.getCompany(), r.dutyToList(),
                         r.getCareer(), r.getPeriod(), r.getLocation(), r.getUrl()))
                 .collect(Collectors.toList());
     }
