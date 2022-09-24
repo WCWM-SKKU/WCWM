@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import wcwm.wcwm.dto.response.DataResponse;
 import wcwm.wcwm.dto.response.RecruitResponse;
 import wcwm.wcwm.exception.CustomException;
 import wcwm.wcwm.exception.CustomExceptionStatus;
@@ -36,7 +37,7 @@ public class RecruitController {
     }
 
     @GetMapping(params = { "min-career", "duty" })
-    public List<RecruitResponse> getRecruitsByDutyAndMinCareer(
+    public DataResponse<List<RecruitResponse>> getRecruitsByDutyAndMinCareer(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "min-career") Integer minCareer,
             @RequestParam(value = "duty") String duty) {
@@ -49,7 +50,7 @@ public class RecruitController {
     }
 
     @GetMapping(params = "min-career")
-    public List<RecruitResponse> getRecruitsByMinCareer(
+    public DataResponse<List<RecruitResponse>> getRecruitsByMinCareer(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "min-career") Integer minCareer) {
 
@@ -58,7 +59,7 @@ public class RecruitController {
     }
 
     @GetMapping(params = "duty")
-    public List<RecruitResponse> getRecruitsByDuty(
+    public DataResponse<List<RecruitResponse>> getRecruitsByDuty(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "duty") String duty) {
 
@@ -70,7 +71,7 @@ public class RecruitController {
     }
 
     @GetMapping
-    public List<RecruitResponse> getRecruits(
+    public DataResponse<List<RecruitResponse>> getRecruits(
             @RequestParam(value = "page", defaultValue = "0") Integer page) {
 
         log.info("GET /recruit?page={}", page);
@@ -78,7 +79,7 @@ public class RecruitController {
     }
 
     @GetMapping("/{recruitId}")
-    public Optional<RecruitResponse> getRecruit(@PathVariable Long recruitId) {
+    public DataResponse<Optional<RecruitResponse>> getRecruit(@PathVariable Long recruitId) {
         log.info("GET /recruit/{}", recruitId);
         return recruitService.findOne(recruitId);
     }

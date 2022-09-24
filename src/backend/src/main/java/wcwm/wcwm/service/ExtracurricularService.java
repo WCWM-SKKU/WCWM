@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import wcwm.wcwm.domain.ExtracurricularActivity;
+import wcwm.wcwm.dto.response.DataResponse;
 import wcwm.wcwm.dto.response.ExtracurricularResponse;
 import wcwm.wcwm.exception.CustomException;
 import wcwm.wcwm.repository.ExtracurricularRepository;
@@ -22,43 +23,43 @@ import static wcwm.wcwm.exception.CustomExceptionStatus.*;
 public class ExtracurricularService {
 
         private final ExtracurricularRepository extracurricularRepository;
+        private final ResponseService responseService;
 
         private final int MAX_RESULTS = 20;
 
         @Transactional(readOnly = true)
-        public List<ExtracurricularResponse> findExtracurriculars(Integer page) {
+        public DataResponse<List<ExtracurricularActivity>> findExtracurriculars(Integer page) {
                 List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(
                                 MAX_RESULTS * page,
                                 MAX_RESULTS);
-                return toResponse(foundExtracurriculars);
+                return responseService.getDataResponse(foundExtracurriculars);
         }
 
         @Transactional(readOnly = true)
-        public Optional<ExtracurricularResponse> findOne(Long id) {
+        public DataResponse<Optional<ExtracurricularResponse>> findOne(Long id) {
                 ExtracurricularActivity find = Optional.ofNullable(extracurricularRepository.findOne(id))
                                 .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
                 Optional<ExtracurricularResponse> result = Optional
-                                .ofNullable(new ExtracurricularResponse(SUCCESS.isSuccess(), SUCCESS.getCode(),
-                                                SUCCESS.getMessage(), find.getId(), find.getTitle(),
+                                .ofNullable(new ExtracurricularResponse(find.getId(), find.getTitle(),
                                                 find.categoryToList(), find.targetToList(),
                                                 find.getHost(), find.getSponsor(), find.getPeriod(),
                                                 find.getTotal_prize(), find.getUrl(),
                                                 find.getPoster()));
-                return result;
+                return responseService.getDataResponse(result);
         }
 
         @Transactional(readOnly = true)
-        public List<ExtracurricularResponse> findExtracurricularByCategory(String category, Integer page) {
+        public DataResponse<List<ExtracurricularResponse>> findExtracurricularByCategory(String category,
+                        Integer page) {
                 List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findByCategory(category,
                                 MAX_RESULTS * page, MAX_RESULTS);
-                return toResponse(foundExtracurriculars);
+                return responseService.getDataResponse(toResponse(foundExtracurriculars));
         }
 
         public List<ExtracurricularResponse> toResponse(List<ExtracurricularActivity> target) {
                 return target.stream()
-                                .map(e -> new ExtracurricularResponse(SUCCESS.isSuccess(), SUCCESS.getCode(),
-                                                SUCCESS.getMessage(), e.getId(), e.getTitle(), e.categoryToList(),
+                                .map(e -> new ExtracurricularResponse(e.getId(), e.getTitle(), e.categoryToList(),
                                                 e.targetToList(),
                                                 e.getHost(), e.getSponsor(), e.getPeriod(), e.getTotal_prize(),
                                                 e.getUrl(), e.getPoster()))
