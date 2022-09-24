@@ -1,4 +1,4 @@
-package wcwm.wcwm.dto;
+package wcwm.wcwm.dto.response;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RecruitResponse {
+
     private Long id;
 
     private String title;

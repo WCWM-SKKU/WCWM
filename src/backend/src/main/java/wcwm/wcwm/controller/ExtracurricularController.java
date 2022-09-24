@@ -3,6 +3,9 @@ package wcwm.wcwm.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import wcwm.wcwm.dto.ExtracurricularResponse;
+import wcwm.wcwm.domain.ExtracurricularActivity;
+import wcwm.wcwm.dto.response.DataResponse;
+import wcwm.wcwm.dto.response.ExtracurricularResponse;
+import wcwm.wcwm.exception.CustomException;
 import wcwm.wcwm.service.ExtracurricularService;
+
+import static wcwm.wcwm.exception.CustomExceptionStatus.*;
 
 @Slf4j
 @RestController
@@ -52,9 +60,13 @@ public class ExtracurricularController {
     }
 
     @GetMapping(params = "categoryId")
-    public List<ExtracurricularResponse> getExtracurricularsByCategory(
+    public DataResponse<List<ExtracurricularResponse>> getExtracurricularsByCategory(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "categoryId") Integer categoryId) {
+            @RequestParam(value = "categoryId") Integer categoryId,
+            HttpServletRequest request) {
+
+        if (categoryId < 1 || categoryId > 17)
+            throw new CustomException(NON_VALID_CATEGORY);
 
         String category = categoryMappingMap.get(categoryId);
         log.info("GET /extracurricular?page={}&categoryId={}=>{}", page, categoryId, category);
@@ -62,7 +74,7 @@ public class ExtracurricularController {
     }
 
     @GetMapping
-    public List<ExtracurricularResponse> getExtracurriculars(
+    public DataResponse<List<ExtracurricularActivity>> getExtracurriculars(
             @RequestParam(value = "page", defaultValue = "0") Integer page) {
 
         log.info("GET /extracurricular?page={}", page);
@@ -70,7 +82,7 @@ public class ExtracurricularController {
     }
 
     @GetMapping("/{extracurricularId}")
-    public ExtracurricularResponse getExtracurricular(@PathVariable Long extracurricularId) {
+    public DataResponse<Optional<ExtracurricularResponse>> getExtracurricular(@PathVariable Long extracurricularId) {
         log.info("GET /extracurricular/{}", extracurricularId);
         return extracurricularService.findOne(extracurricularId);
     }
