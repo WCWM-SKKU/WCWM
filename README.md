@@ -1,5 +1,10 @@
 # WCWM
 
+## API
+https://whyjyj.notion.site/API-6bd83e1918094f99b74ee349d4682a1a
+
+--- 
+
 ## 디렉토리 구조
 ```
 wcwm
@@ -23,6 +28,8 @@ wcwm
 |src|소스 코드|
 |resources|템플릿, 폰트|
 
+---
+
 ## 커밋 컨벤션
 | 메시지 | 설명 |
 |:---:|:---:|
@@ -32,3 +39,4 @@ wcwm
 | style | 코드 포맷팅 |
 | refactor | 코드 리팩토링 |
 | chore | 빌드 및 패키지 수정 |
+
