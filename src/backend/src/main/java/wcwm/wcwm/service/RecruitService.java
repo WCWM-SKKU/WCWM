@@ -66,8 +66,7 @@ public class RecruitService {
 
     public List<RecruitResponse> toResponse(List<Recruit> target) {
         return target.stream()
-                .map(r -> new RecruitResponse(r.getId(), r.getTitle(), r.getCompany(), r.dutyToList(),
-                        r.getCareer(), r.getPeriod(), r.getLocation(), r.getUrl()))
+                .map(RecruitResponse::new)
                 .collect(Collectors.toList());
     }
 }
