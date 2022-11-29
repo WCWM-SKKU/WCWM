@@ -59,10 +59,7 @@ public class ExtracurricularService {
 
         public List<ExtracurricularResponse> toResponse(List<ExtracurricularActivity> target) {
                 return target.stream()
-                                .map(e -> new ExtracurricularResponse(e.getId(), e.getTitle(), e.categoryToList(),
-                                                e.targetToList(),
-                                                e.getHost(), e.getSponsor(), e.getPeriod(), e.getTotal_prize(),
-                                                e.getUrl(), e.getPoster()))
+                                .map(ExtracurricularResponse::new)
                                 .collect(Collectors.toList());
         }
 }
