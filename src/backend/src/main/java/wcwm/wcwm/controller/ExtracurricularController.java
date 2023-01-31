@@ -82,7 +82,7 @@ public class ExtracurricularController {
     }
 
     @GetMapping("/{extracurricularId}")
-    public DataResponse<Optional<ExtracurricularResponse>> getExtracurricular(@PathVariable Long extracurricularId) {
+    public DataResponse<ExtracurricularResponse> getExtracurricular(@PathVariable Long extracurricularId) {
         log.info("GET /extracurricular/{}", extracurricularId);
         return extracurricularService.findOne(extracurricularId);
     }

@@ -1,6 +1,7 @@
 package wcwm.wcwm.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -27,8 +28,8 @@ public class RecruitRepository {
                                 .getResultList();
         }
 
-        public Recruit findOne(Long id) {
-                return em.find(Recruit.class, id);
+        public Optional<Recruit> findById(Long id) {
+                return Optional.ofNullable(em.find(Recruit.class, id));
         }
 
         public List<Recruit> findByMinCareer(Integer minCareer, Integer firstResult, Integer maxResults) {

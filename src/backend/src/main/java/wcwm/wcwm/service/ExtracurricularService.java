@@ -36,16 +36,15 @@ public class ExtracurricularService {
         }
 
         @Transactional(readOnly = true)
-        public DataResponse<Optional<ExtracurricularResponse>> findOne(Long id) {
-                ExtracurricularActivity find = Optional.ofNullable(extracurricularRepository.findOne(id))
+        public DataResponse<ExtracurricularResponse> findOne(Long id) {
+                ExtracurricularActivity find = extracurricularRepository.findById(id)
                                 .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
-                Optional<ExtracurricularResponse> result = Optional
-                                .ofNullable(new ExtracurricularResponse(find.getId(), find.getTitle(),
+                ExtracurricularResponse result = new ExtracurricularResponse(find.getId(), find.getTitle(),
                                                 find.categoryToList(), find.targetToList(),
                                                 find.getHost(), find.getSponsor(), find.getPeriod(),
                                                 find.getTotal_prize(), find.getUrl(),
-                                                find.getPoster()));
+                                                find.getPoster());
                 return responseService.getDataResponse(result);
         }
 
