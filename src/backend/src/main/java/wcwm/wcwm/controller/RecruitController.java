@@ -79,7 +79,7 @@ public class RecruitController {
     }
 
     @GetMapping("/{recruitId}")
-    public DataResponse<Optional<RecruitResponse>> getRecruit(@PathVariable Long recruitId) {
+    public DataResponse<RecruitResponse> getRecruit(@PathVariable Long recruitId) {
         log.info("GET /recruit/{}", recruitId);
         return recruitService.findOne(recruitId);
     }

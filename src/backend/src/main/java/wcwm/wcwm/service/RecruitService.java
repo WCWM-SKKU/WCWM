@@ -34,13 +34,12 @@ public class RecruitService {
     }
 
     @Transactional(readOnly = true)
-    public DataResponse<Optional<RecruitResponse>> findOne(Long id) {
-        Recruit find = Optional.ofNullable(recruitRepository.findOne(id))
+    public DataResponse<RecruitResponse> findOne(Long id) {
+        Recruit find = recruitRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
-        Optional<RecruitResponse> result = Optional
-                .ofNullable(new RecruitResponse(find.getId(), find.getTitle(), find.getCompany(),
-                        find.dutyToList(), find.getCareer(), find.getPeriod(), find.getLocation(), find.getUrl()));
+        RecruitResponse result = new RecruitResponse(find.getId(), find.getTitle(), find.getCompany(),
+                        find.dutyToList(), find.getCareer(), find.getPeriod(), find.getLocation(), find.getUrl());
         return responseService.getDataResponse(result);
     }
 

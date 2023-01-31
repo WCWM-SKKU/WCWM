@@ -1,6 +1,7 @@
 package wcwm.wcwm.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -29,8 +30,8 @@ public class ExtracurricularRepository {
                 .getResultList();
     }
 
-    public ExtracurricularActivity findOne(Long id) {
-        return em.find(ExtracurricularActivity.class, id);
+    public Optional<ExtracurricularActivity> findById(Long id) {
+        return Optional.ofNullable(em.find(ExtracurricularActivity.class, id));
     }
 
     public List<ExtracurricularActivity> findByCategory(String category, Integer firstResult, Integer maxResults) {
