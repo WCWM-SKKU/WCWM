@@ -19,7 +19,7 @@ import wcwm.wcwm.service.RecruitService;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/recruit")
+@RequestMapping(value = "/api/recruit")
 public class RecruitController {
 
     private final String[] arr = { "Server-Backend", "Frontend", "Web-FullStack", "Android", "iPhone", "ML",
