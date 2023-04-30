@@ -24,7 +24,7 @@ import static wcwm.wcwm.exception.CustomExceptionStatus.*;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/extracurricular")
+@RequestMapping(value = "/api/extracurricular")
 public class ExtracurricularController {
 
     private final ExtracurricularService extracurricularService;
