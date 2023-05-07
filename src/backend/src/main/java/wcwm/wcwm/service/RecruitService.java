@@ -38,8 +38,7 @@ public class RecruitService {
         Recruit find = recruitRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
-        RecruitResponse result = new RecruitResponse(find.getId(), find.getTitle(), find.getCompany(),
-                        find.dutyToList(), find.getCareer(), find.getPeriod(), find.getLocation(), find.getUrl());
+        RecruitResponse result = new RecruitResponse(find);
         return responseService.getDataResponse(result);
     }
 

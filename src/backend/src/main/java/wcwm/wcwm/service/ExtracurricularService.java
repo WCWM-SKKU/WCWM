@@ -40,11 +40,7 @@ public class ExtracurricularService {
                 ExtracurricularActivity find = extracurricularRepository.findById(id)
                                 .orElseThrow(() -> new CustomException(NON_VALID_ID));
 
-                ExtracurricularResponse result = new ExtracurricularResponse(find.getId(), find.getTitle(),
-                                                find.categoryToList(), find.targetToList(),
-                                                find.getHost(), find.getSponsor(), find.getPeriod(),
-                                                find.getTotal_prize(), find.getUrl(),
-                                                find.getPoster());
+                ExtracurricularResponse result = new ExtracurricularResponse(find);
                 return responseService.getDataResponse(result);
         }
 
