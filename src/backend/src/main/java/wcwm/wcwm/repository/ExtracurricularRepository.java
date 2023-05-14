@@ -16,10 +16,9 @@ public class ExtracurricularRepository {
 
     private final EntityManager em;
 
-    /**
-     * Todo
-     * Optional 처리
-     */
+    public void save(ExtracurricularActivity extracurricularActivity) {
+        em.persist(extracurricularActivity);
+    }
 
     public List<ExtracurricularActivity> findAll(Integer firstResult, Integer maxResults) {
         return em
@@ -43,5 +42,9 @@ public class ExtracurricularRepository {
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults)
                 .getResultList();
+    }
+
+    public void delete(Long id) {
+        em.remove(em.find(ExtracurricularActivity.class, id));
     }
 }
