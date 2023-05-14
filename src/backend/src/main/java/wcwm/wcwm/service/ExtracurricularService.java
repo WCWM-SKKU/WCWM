@@ -27,6 +27,13 @@ public class ExtracurricularService {
 
         private final int MAX_RESULTS = 20;
 
+        @Transactional
+        public Long createExtracurricular(ExtracurricularActivity extracurricular) {
+                // validate
+                extracurricularRepository.save(extracurricular);
+                return extracurricular.getId();
+        }
+
         @Transactional(readOnly = true)
         public DataResponse<List<ExtracurricularActivity>> findExtracurriculars(Integer page) {
                 List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(
@@ -50,6 +57,12 @@ public class ExtracurricularService {
                 List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findByCategory(category,
                                 MAX_RESULTS * page, MAX_RESULTS);
                 return responseService.getDataResponse(toResponse(foundExtracurriculars));
+        }
+
+        public void delete(Long id) {
+                ExtracurricularActivity extraCurri = extracurricularRepository.findById(id)
+                        .orElseThrow(() -> new CustomException(NON_VALID_ID)); // Exception Type 생각해볼 것
+                extracurricularRepository.delete(extraCurri.getId());
         }
 
         public List<ExtracurricularResponse> toResponse(List<ExtracurricularActivity> target) {
