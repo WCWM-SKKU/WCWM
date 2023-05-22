@@ -35,11 +35,11 @@ public class ExtracurricularService {
         }
 
         @Transactional(readOnly = true)
-        public DataResponse<List<ExtracurricularActivity>> findExtracurriculars(Integer page) {
+        public DataResponse<List<ExtracurricularResponse>> findExtracurriculars(Integer page) {
                 List<ExtracurricularActivity> foundExtracurriculars = extracurricularRepository.findAll(
                                 MAX_RESULTS * page,
                                 MAX_RESULTS);
-                return responseService.getDataResponse(foundExtracurriculars);
+                return responseService.getDataResponse(toResponse(foundExtracurriculars));
         }
 
         @Transactional(readOnly = true)

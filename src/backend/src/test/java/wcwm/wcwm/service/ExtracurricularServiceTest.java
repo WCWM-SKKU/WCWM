@@ -90,19 +90,20 @@ class ExtracurricularServiceTest {
         List<ExtracurricularActivity> extracurriculars = Collections.singletonList(extracurricular);
         given(extracurricularRepository.findAll(0, 20)).willReturn(extracurriculars);
 
-        DataResponse<List<ExtracurricularActivity>> expectedResponse = new DataResponse<>();
-        expectedResponse.setResult(extracurriculars);
+        DataResponse<List<ExtracurricularResponse>> expectedResponse = new DataResponse<>();
+        expectedResponse.setResult(extracurricularService.toResponse(extracurriculars));
         expectedResponse.setIsSuccess(true);
         expectedResponse.setCode(2000);
         expectedResponse.setMessage("요청에 성공하였습니다.");
 
-        given(responseService.getDataResponse(extracurriculars)).willReturn(expectedResponse);
+        given(responseService.getDataResponse(extracurricularService.toResponse(extracurriculars))).willReturn(expectedResponse);
 
         // when
-        DataResponse<List<ExtracurricularActivity>> actualResponse = extracurricularService.findExtracurriculars(0);
+        DataResponse<List<ExtracurricularResponse>> actualResponse = extracurricularService.findExtracurriculars(0);
 
         // then
         assertEquals(expectedResponse, actualResponse);
+
     }
 
     @Test
