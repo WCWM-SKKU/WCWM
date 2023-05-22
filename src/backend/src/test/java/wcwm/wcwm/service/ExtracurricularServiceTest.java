@@ -3,9 +3,10 @@ package wcwm.wcwm.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import wcwm.wcwm.domain.ExtracurricularActivity;
 import wcwm.wcwm.dto.response.DataResponse;
 import wcwm.wcwm.dto.response.ExtracurricularResponse;
@@ -19,9 +20,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ExtracurricularServiceTest {
 
     @InjectMocks
@@ -90,19 +92,20 @@ class ExtracurricularServiceTest {
         List<ExtracurricularActivity> extracurriculars = Collections.singletonList(extracurricular);
         given(extracurricularRepository.findAll(0, 20)).willReturn(extracurriculars);
 
-        DataResponse<List<ExtracurricularActivity>> expectedResponse = new DataResponse<>();
-        expectedResponse.setResult(extracurriculars);
+        DataResponse<List<ExtracurricularResponse>> expectedResponse = new DataResponse<>();
+        expectedResponse.setResult(extracurricularService.toResponse(extracurriculars));
         expectedResponse.setIsSuccess(true);
         expectedResponse.setCode(2000);
         expectedResponse.setMessage("요청에 성공하였습니다.");
 
-        given(responseService.getDataResponse(extracurriculars)).willReturn(expectedResponse);
+        given(responseService.getDataResponse(extracurricularService.toResponse(extracurriculars))).willReturn(expectedResponse);
 
         // when
-        DataResponse<List<ExtracurricularActivity>> actualResponse = extracurricularService.findExtracurriculars(0);
+        DataResponse<List<ExtracurricularResponse>> actualResponse = extracurricularService.findExtracurriculars(0);
 
         // then
         assertEquals(expectedResponse, actualResponse);
+
     }
 
     @Test
