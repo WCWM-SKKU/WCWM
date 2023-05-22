@@ -3,9 +3,10 @@ package wcwm.wcwm.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import wcwm.wcwm.domain.ExtracurricularActivity;
 import wcwm.wcwm.dto.response.DataResponse;
 import wcwm.wcwm.dto.response.ExtracurricularResponse;
@@ -19,9 +20,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ExtracurricularServiceTest {
 
     @InjectMocks
